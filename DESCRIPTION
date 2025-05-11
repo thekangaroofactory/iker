@@ -1,0 +1,11 @@
+Package: iker
+Title: Iker Is Your Data Scribe
+Version: 0.9.0
+Authors@R: 
+    person("Philippe", "Peret", , "philippe.peret@hotmail.com", role = c("aut", "cre"),
+           comment = c(ORCID = "0009-0003-9666-7490"))
+Description: Iker defines itself as a Scribe - a person who copies out documents. The package is meant to read / write data and provide various connectors.
+License: use_gpl3_license()
+Encoding: UTF-8
+Roxygen: list(markdown = TRUE)
+RoxygenNote: 7.3.1
