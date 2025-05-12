@@ -12,9 +12,11 @@
 #' By default, path takes its value from the DATA_HOME environment variable.
 #' If it's not set in the environment and no value has been provided, function will be stopped (and return FALSE).
 #' If the corresponding path does not exist, it won't be created - to avoid creating data inside a container if the mount has not been done for example.
+#' When NULL, no check will be done.
 #'
 #' Resource is an optional parameter to allow the use of sub folder inside path.
 #' If not NULL, it will be concatenated to path (and created inside path if it does not exist)
+#' When path is NULL, it will be ignored.
 #'
 #' @returns returns the input x invisibly, or FALSE when it fails
 #' @export
@@ -31,10 +33,11 @@ write_data <- function(x, path = Sys.getenv("DATA_HOME"), resource = NULL, file,
   # check parameters
   # ----------------------------------------------------------------------------
 
-  # -- check path
-  if(path == ""){
-    message("[Warning] Path is empty, check DATA_HOME environment variable or provide a value for path argument")
-    return(FALSE)}
+  # -- check path (skip if NULL)
+  if(!is.null(path))
+    if(path == ""){
+      message("[Warning] Path is empty, check DATA_HOME environment variable or provide a value for path argument")
+      return(FALSE)}
 
   # -- get extension
   extension <- tools::file_ext(file)
@@ -47,23 +50,28 @@ write_data <- function(x, path = Sys.getenv("DATA_HOME"), resource = NULL, file,
   # check target path
   # ----------------------------------------------------------------------------
 
-  # -- check base path
-  if(!dir.exists(path)){
-    message("[Warning] Path does not exist - can't save the data")
-    return(FALSE)}
+  # -- skip if NULL
+  if(!is.null(path)){
 
-  # -- check resource path
-  if(!is.null(resource)){
+    # -- check base path
+    if(!dir.exists(path)){
+      message("[Warning] Path does not exist - can't save the data")
+      return(FALSE)}
 
-    # -- concatenate
-    path <- file.path(path, resource)
+    # -- check resource path
+    if(!is.null(resource)){
 
-    if(verbose)
-      cat("[write_data] Update path with resource folder \n")
+      # -- concatenate
+      path <- file.path(path, resource)
 
-    # -- check new path
-    if(!dir.exists(path))
-      dir.create(path)}
+      if(verbose)
+        cat("[write_data] Update path with resource folder \n")
+
+      # -- check new path
+      if(!dir.exists(path))
+        dir.create(path)}
+
+  }
 
 
   # ----------------------------------------------------------------------------
@@ -82,8 +90,8 @@ write_data <- function(x, path = Sys.getenv("DATA_HOME"), resource = NULL, file,
 
       # -- expression
       res <- readr::write_delim(x = x,
-                         file = file.path(path, file),
-                         delim = delim)},
+                                file = ifelse(is.null(path), file, file.path(path, file)),
+                                delim = delim)},
 
       # -- error
       error = function(e)
