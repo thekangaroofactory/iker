@@ -27,10 +27,11 @@ read_data <- function(path = Sys.getenv("DATA_HOME"), resource = NULL, file, del
   # check parameters
   # ----------------------------------------------------------------------------
 
-  # -- check path
-  if(path == ""){
-    message("[Warning] Path is empty, check DATA_HOME environment variable or provide a value for path argument")
-    return(NULL)}
+  # -- check path (skip if NULL)
+  if(!is.null(path))
+    if(path == ""){
+      message("[Warning] Path is empty, check DATA_HOME environment variable or provide a value for path argument")
+      return(NULL)}
 
   # -- get extension
   extension <- tools::file_ext(file)
