@@ -28,7 +28,7 @@ create_test_data <- function(sub_folder = NULL){
   dir.create(target_dir, recursive = TRUE, showWarnings = FALSE)
 
   # -- create test file
-  readr::write_delim(template_df, file = file.path(target_dir, filename), delim = ";")
+  readr::write_delim(template_df, file = file.path(target_dir, filename), delim = ",")
 
 }
 
