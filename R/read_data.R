@@ -38,25 +38,29 @@ read_data <- function(path = Sys.getenv("DATA_HOME"), resource = NULL, file, del
     message("[Warning] Can't guess extension from file")
     return(NULL)}
 
-  # -- check resource path
-  if(!is.null(resource)){
-
-    # -- concatenate
-    path <- file.path(path, resource)
-
-    if(verbose)
-      cat("[write_data] Update path with resource folder \n")}
-
 
   # ----------------------------------------------------------------------------
   # check target path
   # ----------------------------------------------------------------------------
 
-  # -- check path
-  if(!dir.exists(path)){
-    message("[Warning] Path does not exist")
-    return(NULL)}
+  # -- skip when path is NULL
+  if(!is.null(path)){
 
+    # -- check resource
+    if(!is.null(resource)){
+
+      # -- concatenate
+      path <- file.path(path, resource)
+
+      if(verbose)
+        cat("[write_data] Update path with resource folder \n")}
+
+    # -- check dir
+    if(!dir.exists(path)){
+      message("[Warning] Path does not exist")
+      return(NULL)}
+
+  }
 
   # ----------------------------------------------------------------------------
   # read the data
@@ -74,7 +78,8 @@ read_data <- function(path = Sys.getenv("DATA_HOME"), resource = NULL, file, del
       cat("Iker is reading your data... \n")
 
       # -- read data
-      x <- readr::read_delim(file = file.path(path, file),
+      # skip path if NULL
+      x <- readr::read_delim(file = ifelse(is.null(path), file, file.path(path, file)),
                              delim = delim,
                              col_types = col_types)
 
