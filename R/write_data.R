@@ -5,7 +5,7 @@
 #' @param x A data frame or tibble to write to disk.
 #' @param path A path where to write the data (see details).
 #' @param resource An optional resource name (used as sub folder inside path).
-#' @param file The name of the file (with extension)
+#' @param file The name of the file to write (with extension)
 #' @param verbose If TRUE, additional messages will be sent to the console
 #'
 #' @details
@@ -70,6 +70,9 @@ write_data <- function(x, path = Sys.getenv("DATA_HOME"), resource = NULL, file,
   # write the data
   # ----------------------------------------------------------------------------
 
+  # -- init
+  res <- FALSE
+
   # -- case csv (default)
   if(extension == "csv"){
 
@@ -78,15 +81,15 @@ write_data <- function(x, path = Sys.getenv("DATA_HOME"), resource = NULL, file,
       cat("Iker is writing your data... \n")
 
       # -- expression
-      readr::write_delim(x = x,
+      res <- readr::write_delim(x = x,
                          file = file.path(path, file),
                          delim = ";")},
 
       # -- error
-      error = function(e){
-        message(e)
-        return(FALSE)})
+      error = function(e)
+        message(e$message))}
 
-  }
+  # -- return
+  res
 
 }

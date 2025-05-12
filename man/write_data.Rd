@@ -19,7 +19,7 @@ write_data(
 
 \item{resource}{An optional resource name (used as sub folder inside path).}
 
-\item{file}{The name of the file (with extension)}
+\item{file}{The name of the file to write (with extension)}
 
 \item{verbose}{If TRUE, additional messages will be sent to the console}
 }
