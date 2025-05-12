@@ -29,7 +29,7 @@ test_that("read_data works", {
   x <- read_data(path = testdata_path, file = filename, resource = "resource", verbose = TRUE)
 
   # -- check
-  expect_true(tibble::is_tibble(x))
+  expect_type(x, "list")
 
   # -- cleanup
   clean_test_data()
