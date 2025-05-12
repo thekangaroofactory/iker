@@ -21,7 +21,7 @@
 #' }
 
 
-read_data <- function(path = Sys.getenv("DATA_HOME"), resource = NULL, file, col_types = NULL, verbose = FALSE){
+read_data <- function(path = Sys.getenv("DATA_HOME"), resource = NULL, file, delim = ",", col_types = NULL, verbose = FALSE){
 
   # ----------------------------------------------------------------------------
   # check parameters
@@ -75,7 +75,7 @@ read_data <- function(path = Sys.getenv("DATA_HOME"), resource = NULL, file, col
 
       # -- read data
       x <- readr::read_delim(file = file.path(path, file),
-                             delim = ";",
+                             delim = delim,
                              col_types = col_types)
 
       # -- log

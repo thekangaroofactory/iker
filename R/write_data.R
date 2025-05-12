@@ -25,7 +25,7 @@
 #' }
 
 
-write_data <- function(x, path = Sys.getenv("DATA_HOME"), resource = NULL, file, verbose = FALSE){
+write_data <- function(x, path = Sys.getenv("DATA_HOME"), resource = NULL, file, delim = ",", verbose = FALSE){
 
   # ----------------------------------------------------------------------------
   # check parameters
@@ -83,7 +83,7 @@ write_data <- function(x, path = Sys.getenv("DATA_HOME"), resource = NULL, file,
       # -- expression
       res <- readr::write_delim(x = x,
                          file = file.path(path, file),
-                         delim = ";")},
+                         delim = delim)},
 
       # -- error
       error = function(e)
