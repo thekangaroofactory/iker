@@ -6,16 +6,20 @@ test_that("read_data works", {
   # ----------------------------------------------------------------------------
 
   # -- path = "" (when env variable is not declared)
-  expect_null(read_data(path = ""))
+  expect_warning(x <- read_data(path = ""))
+  expect_null(x)
 
   # -- path does not exist
-  expect_null(read_data(path = "dummy", file = filename))
+  expect_warning(x <- read_data(path = "dummy", file = filename))
+  expect_null(x)
 
   # -- file without extension
-  expect_null(read_data(path = "dummy", file = "my_data"))
+  expect_warning(x <- read_data(path = "dummy", file = "my_data"))
+  expect_null(x)
 
   # -- missing file
-  expect_null(read_data(path = getwd(), file = "missing_file.csv"))
+  expect_warning(x <- read_data(path = getwd(), file = "missing_file.csv"))
+  expect_null(x)
 
 
   # ----------------------------------------------------------------------------

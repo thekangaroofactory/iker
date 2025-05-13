@@ -6,6 +6,7 @@
 #' @param path A path where to write the data (see details).
 #' @param resource An optional resource name (used as sub folder inside path).
 #' @param file The name of the file to write (with extension)
+#' @param delim Single character used to separate fields within a record.
 #' @param verbose If TRUE, additional messages will be sent to the console
 #'
 #' @details
@@ -36,13 +37,13 @@ write_data <- function(x, path = Sys.getenv("DATA_HOME"), resource = NULL, file,
   # -- check path (skip if NULL)
   if(!is.null(path))
     if(path == ""){
-      message("[Warning] Path is empty, check DATA_HOME environment variable or provide a value for path argument")
+      warning("[Iker] Empty path, check DATA_HOME environment variable or provide a value for the argument")
       return(FALSE)}
 
   # -- get extension
   extension <- tools::file_ext(file)
   if(extension == ""){
-    message("[Warning] Can't guess extension from file - csv will be applied by default")
+    message("[Iker] Can't guess extension from file - csv will be applied by default")
     extension <- "csv"}
 
 
@@ -55,7 +56,7 @@ write_data <- function(x, path = Sys.getenv("DATA_HOME"), resource = NULL, file,
 
     # -- check base path
     if(!dir.exists(path)){
-      message("[Warning] Path does not exist - can't save the data")
+      warning("[Iker] Path does not exist - can't save the data!")
       return(FALSE)}
 
     # -- check resource path
@@ -65,7 +66,7 @@ write_data <- function(x, path = Sys.getenv("DATA_HOME"), resource = NULL, file,
       path <- file.path(path, resource)
 
       if(verbose)
-        cat("[write_data] Update path with resource folder \n")
+        cat("[Iker] Update path with resource folder \n")
 
       # -- check new path
       if(!dir.exists(path))
@@ -86,7 +87,7 @@ write_data <- function(x, path = Sys.getenv("DATA_HOME"), resource = NULL, file,
 
     tryCatch({
 
-      cat("Iker is writing your data... \n")
+      cat("[Iker] Writing data to file... \n")
 
       # -- expression
       res <- readr::write_delim(x = x,
@@ -95,7 +96,7 @@ write_data <- function(x, path = Sys.getenv("DATA_HOME"), resource = NULL, file,
 
       # -- error
       error = function(e)
-        message(e$message))}
+        warning(e$message))}
 
   # -- return
   res

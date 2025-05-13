@@ -6,13 +6,16 @@ test_that("write_data works", {
   # ----------------------------------------------------------------------------
 
   # -- path = "" (when env variable is not declared)
-  expect_false(write_data(path = ""))
+  expect_warning(x <- write_data(path = ""))
+  expect_false(x)
 
   # -- path does not exist
-  expect_false(write_data(path = "some/dummy/path", file = "test.csv"))
+  expect_warning(x <- write_data(path = "some/dummy/path", file = "test.csv"))
+  expect_false(x)
 
   # -- write_delim failure (when x is not a data.frame)
-  expect_false(write_data(x = 123, path = getwd(), file = "test.csv"))
+  expect_warning(x <- write_data(x = 123, path = getwd(), file = "test.csv"))
+  expect_false(x)
 
 
   # ----------------------------------------------------------------------------
@@ -23,7 +26,7 @@ test_that("write_data works", {
   dir.create(testdata_path, showWarnings = FALSE)
 
   # -- file without extension
-  x <- write_data(template_df, path = testdata_path, file = "test")
+  expect_message(x <- write_data(template_df, path = testdata_path, file = "test"))
 
   # -- test
   expect_type(x, "list")

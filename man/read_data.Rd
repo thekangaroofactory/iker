@@ -8,6 +8,7 @@ read_data(
   path = Sys.getenv("DATA_HOME"),
   resource = NULL,
   file,
+  delim = ",",
   col_types = NULL,
   verbose = FALSE
 )
@@ -18,6 +19,8 @@ read_data(
 \item{resource}{An optional resource name (used as sub folder inside path).}
 
 \item{file}{The name of the file to read (with extension).}
+
+\item{delim}{Single character used to separate fields within a record.}
 
 \item{col_types}{See read_delim function from readr package.}
 
@@ -32,6 +35,7 @@ Read Data
 \details{
 By default, path takes its value from the DATA_HOME environment variable.
 If it's not set in the environment and no value has been provided, function will be stopped (and return NULL).
+When NULL, it will be ignored (assuming file contains the full path to the file)
 }
 \examples{
 \dontrun{

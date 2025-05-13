@@ -9,6 +9,7 @@ write_data(
   path = Sys.getenv("DATA_HOME"),
   resource = NULL,
   file,
+  delim = ",",
   verbose = FALSE
 )
 }
@@ -20,6 +21,8 @@ write_data(
 \item{resource}{An optional resource name (used as sub folder inside path).}
 
 \item{file}{The name of the file to write (with extension)}
+
+\item{delim}{Single character used to separate fields within a record.}
 
 \item{verbose}{If TRUE, additional messages will be sent to the console}
 }
@@ -33,9 +36,11 @@ Write Data
 By default, path takes its value from the DATA_HOME environment variable.
 If it's not set in the environment and no value has been provided, function will be stopped (and return FALSE).
 If the corresponding path does not exist, it won't be created - to avoid creating data inside a container if the mount has not been done for example.
+When NULL, no check will be done.
 
 Resource is an optional parameter to allow the use of sub folder inside path.
 If not NULL, it will be concatenated to path (and created inside path if it does not exist)
+When path is NULL, it will be ignored.
 }
 \examples{
 \dontrun{
