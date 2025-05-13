@@ -2,7 +2,7 @@
 
 #' Write Data
 #'
-#' @param x A data frame or tibble to write to disk.
+#' @param x A data frame to write to disk.
 #' @param path A path where to write the data (see details).
 #' @param resource An optional resource name (used as sub folder inside path).
 #' @param file The name of the file to write (with extension)
@@ -18,6 +18,9 @@
 #' Resource is an optional parameter to allow the use of sub folder inside path.
 #' If not NULL, it will be concatenated to path (and created inside path if it does not exist)
 #' When path is NULL, it will be ignored.
+#'
+#' Columns with POSIXct type will be converted to ISO-8601 character columns before writing the file
+#'
 #'
 #' @returns returns the input x invisibly, or FALSE when it fails
 #' @export
@@ -86,6 +89,9 @@ write_data <- function(x, path = Sys.getenv("DATA_HOME"), resource = NULL, file,
   if(extension == "csv"){
 
     tryCatch({
+
+      # -- Ensure datetime continuity (ISO-8601)
+      x <- from_POSIXct(x)
 
       cat("[Iker] Writing data to file... \n")
 

@@ -14,6 +14,11 @@
 #' If it's not set in the environment and no value has been provided, function will be stopped (and return NULL).
 #' When NULL, it will be ignored (assuming file contains the full path to the file)
 #'
+#' col_types will be used to detect if POSIXct columns are expected. In this case
+#' they will be read as character first (expecting an ISO-8601 compatible string)
+#' then converted to POSIXct.
+#'
+#'
 #' @returns A tibble, output value of the read_delim() call or NULL if data can't be read.
 #' @export
 #'
@@ -81,6 +86,21 @@ read_data <- function(path = Sys.getenv("DATA_HOME"), resource = NULL, file, del
 
       cat("[Iker] Reading data from file... \n")
 
+      # ------------------------------------------------------------------------
+      # Ensure timezone continuity (ISO-8601)
+      # ------------------------------------------------------------------------
+      # datetime will be read as character (and converted later)
+
+      # -- get datetime index & name
+      idx_ct <- which(col_types %in% "POSIXct")
+      names_ct <- names(col_types[idx_ct])
+
+      # -- convert POSIXct classes
+      if(length(idx_ct) > 0)
+        col_types[idx_ct] <- "character"
+
+      # ------------------------------------------------------------------------
+
       # -- read data
       # skip path if NULL
       x <- readr::read_delim(file = ifelse(is.null(path), file, file.path(path, file)),
@@ -88,8 +108,15 @@ read_data <- function(path = Sys.getenv("DATA_HOME"), resource = NULL, file, del
                              col_types = col_types,
                              show_col_types = FALSE)
 
+
+      # -- convert back to POSIXct (ISO-8601)
+      if(length(idx_ct) > 0)
+        x <- to_POSIXct(x, names_ct)
+
       # -- log
-      cat("- output dim =", nrow(x), "x", ncol(x), "\n")},
+      cat("- output dim =", nrow(x), "x", ncol(x), "\n")
+
+      },
 
       # -- error
       error = function(e)

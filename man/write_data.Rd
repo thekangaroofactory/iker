@@ -14,7 +14,7 @@ write_data(
 )
 }
 \arguments{
-\item{x}{A data frame or tibble to write to disk.}
+\item{x}{A data frame to write to disk.}
 
 \item{path}{A path where to write the data (see details).}
 
@@ -41,6 +41,8 @@ When NULL, no check will be done.
 Resource is an optional parameter to allow the use of sub folder inside path.
 If not NULL, it will be concatenated to path (and created inside path if it does not exist)
 When path is NULL, it will be ignored.
+
+Columns with POSIXct type will be converted to ISO-8601 character columns before writing the file
 }
 \examples{
 \dontrun{

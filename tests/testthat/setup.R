@@ -11,7 +11,15 @@ filename <- "my_data.csv"
 
 # -- template data
 template_df <- data.frame(id = c(1, 2, 3),
-                          name = c("john", "joe", "jayden"))
+                          name = c("john", "joe", "jayden"),
+                          date = Sys.Date(),
+                          datetime = Sys.time())
+
+# -- template col types
+template_col_types <- c(id = "numeric",
+                        name = "character",
+                        date = "Date",
+                        datetime = "POSIXct")
 
 
 # ------------------------------------------------------------------------------

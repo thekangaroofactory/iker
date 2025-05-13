@@ -31,9 +31,11 @@ test_that("read_data works", {
 
   # -- resource
   x <- read_data(path = testdata_path, file = filename, resource = "resource", verbose = TRUE)
-
-  # -- check
   expect_type(x, "list")
+
+  # -- POSIXct
+  x <- read_data(path = testdata_path, file = filename, resource = "resource", col_types = template_col_types, verbose = TRUE)
+  expect_true(inherits(x$datetime, "POSIXct"))
 
   # -- cleanup
   clean_test_data()
