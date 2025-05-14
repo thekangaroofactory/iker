@@ -7,6 +7,6 @@ test_that("to_POSIXct works", {
 
   # -- convert POSIXct to ISO-8601
   x <- to_POSIXct(data.frame(a = "2025-05-13T12:15:30+0200"), "a")
-  expect_equal(x$a, as.POSIXct("2025-05-13 12:15:30"))
+  expect_equal(x$a, as.POSIXct("2025-05-13 12:15:30", tz = Sys.timezone()))
 
 })

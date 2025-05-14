@@ -21,7 +21,7 @@ to_POSIXct <- function(data, names_ct){
     names_ct <- names_ct[names_ct %in% names(data)]
 
     cat("[Iker] Converting attribute(s) to POSIXct =", names_ct, "\n")
-    data[names_ct] <- lapply(data[names_ct], function(x) as.POSIXct(x, format = "%Y-%m-%dT%H:%M:%S%z", tz = ""))}
+    data[names_ct] <- lapply(data[names_ct], function(x) as.POSIXct(x, format = "%Y-%m-%dT%H:%M:%S%z", tz = Sys.timezone()))}
 
   # -- return
   data
