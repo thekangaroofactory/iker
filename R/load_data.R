@@ -7,7 +7,7 @@
 #'
 #' @details
 #' The load_data function is a wrapper around connector functions.
-#' It offers a single point of access to [iker] data persistence features.
+#' It offers a single point of access to the package data persistence features.
 #'
 #' Arguments passed to ... depend on the desired connector:
 #' - file: [read_data()]
