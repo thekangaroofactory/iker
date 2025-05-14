@@ -10,7 +10,7 @@
 #' It offers a single point of access to the package data persistence features.
 #'
 #' Arguments passed to ... depend on the desired connector:
-#' - file: [write_data()]
+#' - file: \link[iker]{write_data}
 #'
 #' @returns the output of the connector function
 #' @export
