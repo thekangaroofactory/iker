@@ -19,11 +19,11 @@ Load Data From Various Connectors
 }
 \details{
 The load_data function is a wrapper around connector functions.
-It offers a single point of access to \link{iker} data persistence features.
+It offers a single point of access to the package data persistence features.
 
 Arguments passed to ... depend on the desired connector:
 \itemize{
-\item file: \code{\link[=read_data]{read_data()}}
+\item file: \link[iker]{read_data}
 }
 }
 \examples{

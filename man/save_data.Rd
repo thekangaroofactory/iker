@@ -17,9 +17,18 @@ the output of the connector function
 \description{
 Save Data To Various Connectors
 }
+\details{
+The save_data function is a wrapper around connector functions.
+It offers a single point of access to the package data persistence features.
+
+Arguments passed to ... depend on the desired connector:
+\itemize{
+\item file: \link[iker]{write_data}
+}
+}
 \examples{
 \dontrun{
 # -- file connector
-load_data(file = "my_data.csv", path = getwd())
+save_data(file = "my_data.csv", path = getwd())
 }
 }
