@@ -3,5 +3,6 @@
 export(from_POSIXct)
 export(load_data)
 export(read_data)
+export(save_data)
 export(to_POSIXct)
 export(write_data)
