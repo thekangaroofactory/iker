@@ -5,6 +5,13 @@
 #' @param ... arguments to pass to connector (see details)
 #' @param verbose a logical (default = FALSE) to indicate if additional traces should be sent to the console
 #'
+#' @details
+#' The load_data function is a wrapper around connector functions.
+#' It offers a single point of access to [iker] data persistence features.
+#'
+#' Arguments passed to ... depend on the desired connector:
+#' - file: [read_data()]
+#'
 #' @returns the output of the connector function
 #' @export
 #'
