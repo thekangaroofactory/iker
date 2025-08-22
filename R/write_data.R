@@ -90,6 +90,11 @@ write_data <- function(x, path = Sys.getenv("DATA_HOME"), resource = NULL, file,
 
     tryCatch({
 
+      # -- Convert tibble to data.frame
+      # (otherwise from_POSIXct will fail)
+      if(tibble::is_tibble(x))
+        x <- as.data.frame(x)
+
       # -- Ensure datetime continuity (ISO-8601)
       x <- from_POSIXct(x)
 
