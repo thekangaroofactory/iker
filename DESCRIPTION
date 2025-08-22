@@ -1,6 +1,6 @@
 Package: iker
 Title: Iker Is Your Data Scribe
-Version: 0.9.1
+Version: 0.9.2
 Authors@R: 
     person("Philippe", "Peret", , "philippe.peret@hotmail.com", role = c("aut", "cre"),
            comment = c(ORCID = "0009-0003-9666-7490"))
