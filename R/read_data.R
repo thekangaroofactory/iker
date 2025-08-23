@@ -61,7 +61,7 @@ read_data <- function(path = Sys.getenv("DATA_HOME"), resource = NULL, file, del
       path <- file.path(path, resource)
 
       if(verbose)
-        cat("[Iker] Update path with resource folder \n")}
+        ktools::catl("[Iker] Update path with resource folder \n", level = 2)}
 
     # -- check dir
     if(!dir.exists(path)){
@@ -84,7 +84,7 @@ read_data <- function(path = Sys.getenv("DATA_HOME"), resource = NULL, file, del
     # -- read the data
     tryCatch({
 
-      cat("[Iker] Reading data from file... \n")
+      ktools::catl("[Iker] Reading data from file... \n")
 
       # ------------------------------------------------------------------------
       # Ensure timezone continuity (ISO-8601)
@@ -114,7 +114,7 @@ read_data <- function(path = Sys.getenv("DATA_HOME"), resource = NULL, file, del
         x <- to_POSIXct(x, names_ct)
 
       # -- log
-      cat("- output dim =", nrow(x), "x", ncol(x), "\n")
+      ktools::catl("- output dim =", nrow(x), "x", ncol(x), "\n", level = 2)
 
       },
 

@@ -20,7 +20,7 @@ to_POSIXct <- function(data, names_ct){
     # -- because any is used, clean potential missing attribute(s)
     names_ct <- names_ct[names_ct %in% names(data)]
 
-    cat("[Iker] Converting attribute(s) to POSIXct =", names_ct, "\n")
+    ktools::catl("[Iker] Converting attribute(s) to POSIXct =", names_ct, "\n", level = 1)
     data[names_ct] <- lapply(data[names_ct], function(x) as.POSIXct(x, format = "%Y-%m-%dT%H:%M:%S%z", tz = Sys.timezone()))}
 
   # -- return

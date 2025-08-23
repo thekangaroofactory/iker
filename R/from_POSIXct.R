@@ -18,7 +18,7 @@ from_POSIXct <- function(data){
 
   # -- convert to ISO 8601 character format
   if(length(idx) > 0){
-    cat("[Iker] Convert datetime attribute(s) to ISO-8601 =", names(data[idx]), "\n")
+    ktools::catl("[Iker] Convert datetime attribute(s) to ISO-8601 =", names(data[idx]), "\n")
     data[idx] <- format(data[idx], "%FT%H:%M:%S%z")}
 
   # -- return
