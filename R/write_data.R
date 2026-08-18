@@ -69,7 +69,7 @@ write_data <- function(x, path = Sys.getenv("DATA_HOME"), resource = NULL, file,
       path <- file.path(path, resource)
 
       if(verbose)
-        ktools::catl("[Iker] Update path with resource folder \n", level = 2)
+        ktools::catl("[Iker] Update path with resource folder", level = 2)
 
       # -- check new path
       if(!dir.exists(path))
@@ -98,7 +98,7 @@ write_data <- function(x, path = Sys.getenv("DATA_HOME"), resource = NULL, file,
       # -- Ensure datetime continuity (ISO-8601)
       x <- from_POSIXct(x)
 
-      ktools::catl("[Iker] Writing data to file... \n")
+      ktools::catl("[Iker] Writing data to file...")
 
       # -- expression
       res <- readr::write_delim(x = x,
