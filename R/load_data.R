@@ -4,6 +4,7 @@
 #'
 #' @param ... arguments to pass to connector (see details)
 #' @param verbose a logical (default = FALSE) to indicate if additional traces should be sent to the console
+#' @param data.frame a logical (default = FALSE) if a data.frame should be returned (instead of a tibble)
 #'
 #' @details
 #' The load_data function is a wrapper around connector functions.
@@ -22,7 +23,7 @@
 #' }
 
 
-load_data <- function(..., verbose = FALSE) {
+load_data <- function(..., verbose = FALSE, data.frame = FALSE) {
 
   # -- get ellipsis arguments
   args <- list(...)
@@ -43,6 +44,9 @@ load_data <- function(..., verbose = FALSE) {
     x <- read_data(..., verbose = verbose)
 
   # -- return
-  x
+  if(data.frame)
+    as.data.frame(x)
+  else
+    x
 
 }

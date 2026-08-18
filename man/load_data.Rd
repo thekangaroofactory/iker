@@ -4,12 +4,14 @@
 \alias{load_data}
 \title{Load Data From Various Connectors}
 \usage{
-load_data(..., verbose = FALSE)
+load_data(..., verbose = FALSE, data.frame = FALSE)
 }
 \arguments{
 \item{...}{arguments to pass to connector (see details)}
 
 \item{verbose}{a logical (default = FALSE) to indicate if additional traces should be sent to the console}
+
+\item{data.frame}{a logical (default = FALSE) if a data.frame should be returned (instead of a tibble)}
 }
 \value{
 the output of the connector function
