@@ -98,7 +98,8 @@ write_data <- function(x, path = Sys.getenv("DATA_HOME"), resource = NULL, file,
       # -- Ensure datetime continuity (ISO-8601)
       x <- from_POSIXct(x)
 
-      ktools::catl("[Iker] Writing data to file...")
+      if(verbose)
+        ktools::catl("[Iker] Writing data to file...")
 
       # -- expression
       res <- readr::write_delim(x = x,

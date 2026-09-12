@@ -84,7 +84,8 @@ read_data <- function(path = Sys.getenv("DATA_HOME"), resource = NULL, file, del
     # -- read the data
     tryCatch({
 
-      ktools::catl("[Iker] Reading data from file...")
+      if(verbose)
+        ktools::catl("[Iker] Reading data from file...")
 
       # ------------------------------------------------------------------------
       # Ensure timezone continuity (ISO-8601)
@@ -114,7 +115,8 @@ read_data <- function(path = Sys.getenv("DATA_HOME"), resource = NULL, file, del
         x <- to_POSIXct(x, names_ct)
 
       # -- log
-      ktools::catl("- output dim =", nrow(x), "x", ncol(x), level = 2)
+      if(verbose)
+        ktools::catl("- output dim =", nrow(x), "x", ncol(x), level = 2)
 
       },
 
