@@ -4,11 +4,19 @@
 # ------------------------------------------------------------------------------
 
 # -- test folder
+# check because of MacOS & Ubuntu remote failure
+# Test directory is:
+# "/Users/runner/work/iker/iker/check/iker.Rcheck/tests/testthat"
+# While package directory is:
+# "/Users/runner/work/iker/iker/check/iker.Rcheck/iker"
 testdata_path <- file.path(system.file("tests", "testthat", package = "iker"), "testdata")
-str(system.file(package = "iker"))
+if(testdata_path == "")
+  testdata_path <- file.path(dirname(system.file(package = "iker"), "tests", "testdata"))
+
+str(testdata_path)
 str(getwd())
 
-"/Users/runner/work/iker/iker/check/iker.Rcheck/tests/testthat"
+# "/Users/runner/work/iker/iker/check/iker.Rcheck/tests/testthat"
 
 # -- test file
 filename <- "my_data.csv"
