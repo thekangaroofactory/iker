@@ -5,6 +5,7 @@
 
 # -- test folder
 testdata_path <- file.path(system.file("tests", "testthat", package = "iker"), "testdata")
+str(testdata_path)
 
 # -- test file
 filename <- "my_data.csv"
