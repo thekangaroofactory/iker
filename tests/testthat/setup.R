@@ -37,6 +37,7 @@ create_test_data <- function(sub_folder = NULL){
 
   # -- create test file
   readr::write_delim(template_df, file = file.path(target_dir, filename), delim = ",")
+  readr::write_delim(template_df[0, ], file = file.path(target_dir, paste0("empty_", filename)), delim = ",")
 
 }
 

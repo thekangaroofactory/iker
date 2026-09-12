@@ -27,6 +27,11 @@ test_that("load_data works", {
   expect_type(x, "list")
   expect_identical(class(x), "data.frame")
 
+  # -- force empty
+  x <- load_data(file = paste0("empty_", filename), path = testdata_path, resource = "resource", force_empty = TRUE)
+  expect_null(x)
+
+
   # -- cleanup
   clean_test_data()
 

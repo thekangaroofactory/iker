@@ -5,6 +5,7 @@
 #' @param ... arguments to pass to connector (see details)
 #' @param verbose a logical (default = FALSE) to indicate if additional traces should be sent to the console
 #' @param data.frame a logical (default = FALSE) if a data.frame should be returned (instead of a tibble)
+#' @param force_empty a logical (default = FALSE) if NULL should be returned when data has no row
 #'
 #' @details
 #' The load_data function is a wrapper around connector functions.
@@ -23,7 +24,7 @@
 #' }
 
 
-load_data <- function(..., verbose = FALSE, data.frame = FALSE) {
+load_data <- function(..., verbose = FALSE, data.frame = FALSE, force_empty = FALSE) {
 
   # -- get ellipsis arguments
   args <- list(...)
@@ -42,6 +43,12 @@ load_data <- function(..., verbose = FALSE, data.frame = FALSE) {
   # -- file connector
   if("file" %in% names(args))
     x <- read_data(..., verbose = verbose)
+
+  # -- force empty
+  # return NULL if x has no rows/observations
+  if(force_empty)
+    if(nrow(x) == 0)
+      return(NULL)
 
   # -- return
   if(data.frame)

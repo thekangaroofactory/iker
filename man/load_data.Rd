@@ -4,7 +4,7 @@
 \alias{load_data}
 \title{Load Data From Various Connectors}
 \usage{
-load_data(..., verbose = FALSE, data.frame = FALSE)
+load_data(..., verbose = FALSE, data.frame = FALSE, force_empty = FALSE)
 }
 \arguments{
 \item{...}{arguments to pass to connector (see details)}
@@ -12,6 +12,8 @@ load_data(..., verbose = FALSE, data.frame = FALSE)
 \item{verbose}{a logical (default = FALSE) to indicate if additional traces should be sent to the console}
 
 \item{data.frame}{a logical (default = FALSE) if a data.frame should be returned (instead of a tibble)}
+
+\item{force_empty}{a logical (default = FALSE) if NULL should be returned when data has no row}
 }
 \value{
 the output of the connector function
