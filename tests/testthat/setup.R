@@ -9,9 +9,10 @@
 # "/Users/runner/work/iker/iker/check/iker.Rcheck/tests/testthat"
 # While package directory is:
 # "/Users/runner/work/iker/iker/check/iker.Rcheck/iker"
-testdata_path <- file.path(system.file("tests", "testthat", package = "iker"), "testdata")
+testdata_path <- system.file("tests", "testthat", package = "iker")
 if(testdata_path == "")
   testdata_path <- file.path(dirname(system.file(package = "iker"), "tests", "testdata"))
+testdata_path <- file.path(testdata_path, "testdata")
 
 str(testdata_path)
 str(getwd())
