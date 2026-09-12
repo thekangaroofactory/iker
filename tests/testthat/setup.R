@@ -14,11 +14,6 @@ if(testdata_path == "")
   testdata_path <- file.path(dirname(system.file(package = "iker")), "tests", "testdata")
 testdata_path <- file.path(testdata_path, "testdata")
 
-str(testdata_path)
-str(getwd())
-
-# "/Users/runner/work/iker/iker/check/iker.Rcheck/tests/testthat"
-
 # -- test file
 filename <- "my_data.csv"
 
