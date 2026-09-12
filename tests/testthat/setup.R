@@ -5,8 +5,10 @@
 
 # -- test folder
 testdata_path <- file.path(system.file("tests", "testthat", package = "iker"), "testdata")
-str(testdata_path)
+str(system.file(package = "iker"))
 str(getwd())
+
+"/Users/runner/work/iker/iker/check/iker.Rcheck/tests/testthat"
 
 # -- test file
 filename <- "my_data.csv"
