@@ -49,10 +49,21 @@ supabase_delete(
 \item{values}{the key value(s) to delete.}
 }
 \value{
-a data.frame or NULL (if call fails).
+a data.frame or NULL (if call fails) for select, TRUE or FALSE for
+successful or failing update and delete.
 }
 \description{
 Helpers to communicate with the Supabase API.
+}
+\details{
+The following parameters accept an environment variable as default:
+\itemize{
+\item url: "SUPABASE_API_URL"
+\item api_key: "SUPABASE_API_KEY"
+\item table: "SUPABASE_TABLE"
+The two first ones are highly recommended for security reasons.
+The last one (table) is useful only when a single table is used.
+}
 }
 \examples{
 \dontrun{
