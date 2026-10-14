@@ -13,7 +13,16 @@
 #' @param api_key the Supabase API key.
 #' @param verbose if logs should be printed.
 #'
-#' @returns a data.frame or NULL (if call fails).
+#' @details
+#' The following parameters accept an environment variable as default:
+#' - url: "SUPABASE_API_URL"
+#' - api_key: "SUPABASE_API_KEY"
+#' - table: "SUPABASE_TABLE"
+#' The two first ones are highly recommended for security reasons.
+#' The last one (table) is useful only when a single table is used.
+#'
+#' @returns a data.frame or NULL (if call fails) for select, TRUE or FALSE for
+#' successful or failing update and delete.
 #' @export
 #'
 #' @examples
