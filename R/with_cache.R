@@ -1,0 +1,105 @@
+
+#' With Cache
+#'
+#' @description
+#' Runs an expression with cache.
+#'
+#' @param expr an expression to evaluate.
+#' @param path the path to the cache folder.
+#' @param timeout a numeric (in hours) to indicate when cache content is expired.
+#' @param force a logical, if cache content should be updated.
+#' @param encrypt a logical, if cache content should be encrypted.
+#' @param key a character string, to be used as a secret.
+#' @param verbose a logical, if logs should be printed.
+#'
+#' @details
+#' Even though the function is designed to work with call_api(), it could in principle
+#' work with any expression.
+#'
+#' When a single location is used to store the cache content, the "R_IKER_CACHE_PATH"
+#' is recommended to define `path`.
+#'
+#' When `force = TRUE`, the expression will be run even if the cache content is
+#' not expired.
+#'
+#' By default, `encrypt` is set to `TRUE` so that cache content is encrypted.
+#' This is because many APIs require a key/token as an authentication method to
+#' access their resources.
+#'
+#' Setting `encrypt = FALSE` exposes the content of the cache files. It should
+#' only be used for APIs that do not require an authentication (an open source
+#' geocoding service for example).
+#'
+#' When `encrypt = TRUE`, a `key` is mandatory to encode/decode the content of
+#' the cache. The expected value is a character string that does NOT need to be
+#' hashed. This value will be used to generate the actual encryption key.
+#' That being said, this key should not be hard coded or an easy one to find.
+#' The [rstring()] function can be used to generate one, but the generated value
+#' needs to be saved and passed to the "R_IKER_CACHE_KEY" environment variable.
+#' If the key is lost, the cache content is lost.
+#'
+#' @seealso [rstring()]
+#'
+#' @returns whatever the evaluation of expr produces.
+#' @export
+#'
+#' @examples
+#' \dontrun{
+#' # set R_IKER_CACHE_PATH environment variable
+#' # set R_IKER_CACHE_KEY environment variable
+#'
+#' # basic example:
+#' # first call will evaluate & return the current time
+#' with_cache(Sys.time(), verbose = T)
+#' # next calls will return cache content (for 8 hours)
+#' with_cache(Sys.time(), verbose = T)
+#' }
+
+with_cache <- function(expr, path = Sys.getenv("R_IKER_CACHE_PATH"),
+                       timeout = 8, force = FALSE,
+                       encrypt = TRUE, key = Sys.getenv("R_IKER_CACHE_KEY"),
+                       verbose = FALSE){
+
+  # check params
+  stopifnot("empty path is not allowed" = nchar(path) > 0)
+  if(encrypt){
+    stopifnot("key must be a character string" = is.character(key))
+    stopifnot("empty key is not allowed" = nchar(key) > 0)
+    key <- openssl::sha256(charToRaw(key))}
+
+  # check cache status
+  hash <- openssl::sha256(deparse(substitute(expr)))
+  if(!force)
+    if(file.exists(file.path(path, hash))){
+
+      if(verbose)
+        cat("Found in cache, checking status \n")
+
+      ts <- file.info(file.path(path, hash))[['mtime']]
+
+      if(as.numeric(difftime(Sys.time(), ts, units = "hours")) < timeout){
+
+        if(verbose)
+          cat("Returning response from cache \n")
+
+        return(
+          unserialize(if(encrypt) openssl::aes_cbc_decrypt(readRDS(file.path(path, hash)), key = key) else readRDS(file.path(path, hash))))
+
+      } else if(verbose)
+        cat("Cache content expired \n")}
+
+  # (otherwise) run expr
+  if(verbose)
+    cat("Evaluating expr \n")
+  x <- eval(expr)
+
+  # update cache
+  if(verbose)
+    cat("Update cache content \n")
+  saveRDS(if(encrypt) openssl::aes_cbc_encrypt(serialize(x, NULL), key = key) else x,
+          file.path(path, hash))
+
+  # return
+  x
+
+}
