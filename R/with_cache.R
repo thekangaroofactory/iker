@@ -8,6 +8,7 @@
 #' @param path the path to the cache folder.
 #' @param timeout a numeric (in hours) to indicate when cache content is expired.
 #' @param force a logical, if cache content should be updated.
+#' @param limit a numeric, the cache size limit (in Mb).
 #' @param encrypt a logical, if cache content should be encrypted.
 #' @param key a character string, to be used as a secret.
 #' @param verbose a logical, if logs should be printed.
@@ -56,7 +57,7 @@
 #' }
 
 with_cache <- function(expr, path = Sys.getenv("R_IKER_CACHE_PATH"),
-                       timeout = 8, force = FALSE,
+                       timeout = 8, force = FALSE, limit = 1,
                        encrypt = TRUE, key = Sys.getenv("R_IKER_CACHE_KEY"),
                        verbose = FALSE){
 
@@ -98,6 +99,23 @@ with_cache <- function(expr, path = Sys.getenv("R_IKER_CACHE_PATH"),
     cat("Update cache content \n")
   saveRDS(if(encrypt) openssl::aes_cbc_encrypt(serialize(x, NULL), key = key) else x,
           file.path(path, hash))
+
+  # ////////////////////////////////////////////////////////////////////////////
+  # cleanup
+
+  # 1. size limit
+  files <- list.files(path, full.names = TRUE)
+  cache_files <- data.frame(file = files,
+                            date = file.mtime(files),
+                            size = file.size(files))
+  cache_size <- sum(cache_files$size) / 1024^2
+  if(cache_size > limit){
+    if(verbose)
+      cat("Size limit reached / cleaning older files. \n")
+    cache_files <- cache_files[order(cache_files$date, decreasing = T), ]
+    cache_files$cumsize <- cumsum(cache_files$size) / 1024^2
+    cleanup <- cache_files[cache_files$cumsize <= cache_size - limit, ]
+    unlink(cleanup$file)}
 
   # return
   x

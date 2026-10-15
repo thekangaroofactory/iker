@@ -9,6 +9,7 @@ with_cache(
   path = Sys.getenv("R_IKER_CACHE_PATH"),
   timeout = 8,
   force = FALSE,
+  limit = 1,
   encrypt = TRUE,
   key = Sys.getenv("R_IKER_CACHE_KEY"),
   verbose = FALSE
@@ -22,6 +23,8 @@ with_cache(
 \item{timeout}{a numeric (in hours) to indicate when cache content is expired.}
 
 \item{force}{a logical, if cache content should be updated.}
+
+\item{limit}{a numeric, the cache size limit (in Mb).}
 
 \item{encrypt}{a logical, if cache content should be encrypted.}
 
