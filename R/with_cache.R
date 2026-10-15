@@ -57,26 +57,60 @@
 #' }
 
 with_cache <- function(expr, path = Sys.getenv("R_IKER_CACHE_PATH"),
-                       timeout = 8, force = FALSE, limit = 1,
+                       timeout = 8, force = FALSE, limit = 1, cleanup = c("auto", "off"),
                        encrypt = TRUE, key = Sys.getenv("R_IKER_CACHE_KEY"),
                        verbose = FALSE){
 
+  # ////////////////////////////////////////////////////////////////////////////
   # check params
+
   stopifnot("empty path is not allowed" = nchar(path) > 0)
+
   if(encrypt){
     stopifnot("key must be a character string" = is.character(key))
     stopifnot("empty key is not allowed" = nchar(key) > 0)
     key <- openssl::sha256(charToRaw(key))}
 
+  if(is.character(cleanup))
+    cleanup <- match.arg(cleanup)
+  else
+    stopifnot("cleanup must be one of auto, off or a numeric value" = is.numeric(cleanup))
+
+
+  # ////////////////////////////////////////////////////////////////////////////
+  # cache content & cleanup
+  files <- list.files(path, full.names = TRUE)
+  cache_files <- data.frame(file = files,
+                            date = file.mtime(files),
+                            size = file.size(files))
+
+  # cleanup obsolete files
+  if(cleanup != "off"){
+
+    if(verbose)
+      cat("Cleaning up obsolete files \n")
+
+    # reference & tag obsolete files
+    ref <- if(is.numeric(cleanup)) cleanup else timeout
+    cache_files$obsolete <- as.numeric(difftime(Sys.time(), cache_files$date, units = "hours")) > ref
+
+    # cleanup files
+    unlink(cache_files[cache_files$obsolete, ]$file)
+
+  }
+
+
+  # ////////////////////////////////////////////////////////////////////////////
   # check cache status
+
   hash <- openssl::sha256(deparse(substitute(expr)))
   if(!force)
-    if(file.exists(file.path(path, hash))){
+    if(file.path(path, hash) %in% cache_files$file){
 
       if(verbose)
         cat("Found in cache, checking status \n")
 
-      ts <- file.info(file.path(path, hash))[['mtime']]
+      ts <- cache_files[cache_files$file == file.path(path, hash), ]$date
 
       if(as.numeric(difftime(Sys.time(), ts, units = "hours")) < timeout){
 
@@ -101,14 +135,10 @@ with_cache <- function(expr, path = Sys.getenv("R_IKER_CACHE_PATH"),
           file.path(path, hash))
 
   # ////////////////////////////////////////////////////////////////////////////
-  # cleanup
+  # size limit
 
-  # 1. size limit
-  files <- list.files(path, full.names = TRUE)
-  cache_files <- data.frame(file = files,
-                            date = file.mtime(files),
-                            size = file.size(files))
   cache_size <- sum(cache_files$size) / 1024^2
+
   if(cache_size > limit){
     if(verbose)
       cat("Size limit reached / cleaning older files. \n")

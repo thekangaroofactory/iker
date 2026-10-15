@@ -10,6 +10,7 @@ with_cache(
   timeout = 8,
   force = FALSE,
   limit = 1,
+  cleanup = c("auto", "off"),
   encrypt = TRUE,
   key = Sys.getenv("R_IKER_CACHE_KEY"),
   verbose = FALSE
