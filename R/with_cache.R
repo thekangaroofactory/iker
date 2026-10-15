@@ -9,6 +9,7 @@
 #' @param timeout a numeric (in hours) to indicate when cache content is expired.
 #' @param force a logical, if cache content should be updated.
 #' @param limit a numeric, the cache size limit (in Mb).
+#' @param cleanup a character string or a numeric value (see details).
 #' @param encrypt a logical, if cache content should be encrypted.
 #' @param key a character string, to be used as a secret.
 #' @param verbose a logical, if logs should be printed.
@@ -22,6 +23,11 @@
 #'
 #' When `force = TRUE`, the expression will be run even if the cache content is
 #' not expired.
+#'
+#' By default `cleanup` is set to "auto". The function will check whether the files
+#' in cache are older than the timeout. Obsolete files will be deleted.
+#' This behavior can be turned off with `cleanup = "off"` or tuned with a numeric
+#' value `cleanup = 24` in hours.
 #'
 #' By default, `encrypt` is set to `TRUE` so that cache content is encrypted.
 #' This is because many APIs require a key/token as an authentication method to

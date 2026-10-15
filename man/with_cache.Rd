@@ -27,6 +27,8 @@ with_cache(
 
 \item{limit}{a numeric, the cache size limit (in Mb).}
 
+\item{cleanup}{a character string or a numeric value (see details).}
+
 \item{encrypt}{a logical, if cache content should be encrypted.}
 
 \item{key}{a character string, to be used as a secret.}
@@ -48,6 +50,11 @@ is recommended to define \code{path}.
 
 When \code{force = TRUE}, the expression will be run even if the cache content is
 not expired.
+
+By default \code{cleanup} is set to "auto". The function will check whether the files
+in cache are older than the timeout. Obsolete files will be deleted.
+This behavior can be turned off with \code{cleanup = "off"} or tuned with a numeric
+value \code{cleanup = 24} in hours.
 
 By default, \code{encrypt} is set to \code{TRUE} so that cache content is encrypted.
 This is because many APIs require a key/token as an authentication method to
