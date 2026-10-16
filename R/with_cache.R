@@ -93,15 +93,17 @@ with_cache <- function(expr, path = Sys.getenv("R_IKER_CACHE_PATH"),
   # cleanup obsolete files
   if(cleanup != "off"){
 
-    if(verbose)
-      cat("Cleaning up obsolete files \n")
-
     # reference & tag obsolete files
     ref <- if(is.numeric(cleanup)) cleanup else timeout
     cache_files$obsolete <- as.numeric(difftime(Sys.time(), cache_files$date, units = "hours")) > ref
 
     # cleanup files
-    unlink(cache_files[cache_files$obsolete, ]$file)
+    if(sum(cache_files$obsolete) > 0){
+
+      if(verbose)
+        cat("Cleanup obsolete files \n")
+
+      unlink(cache_files[cache_files$obsolete, ]$file)}
 
   }
 
