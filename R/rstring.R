@@ -11,8 +11,8 @@
 #' @export
 #'
 #' @examples
-#' random_string()
-#' random_string(n = 10)
+#' rstring()
+#' rstring(n = 10)
 
 rstring <- function(n = 30){
 
