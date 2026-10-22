@@ -35,21 +35,33 @@ save_data <- function(..., verbose = FALSE) {
     args <- append(args[-which(names(args) == "connector")], args$connector)
 
   # -- allowed connectors
-  connectors <- c("file")
+  connectors <- c("file", "api")
 
   # -- check connector
   if(!any(connectors %in% names(args))){
     warning("[iker] one of the connector ", paste0("[", connectors, "]"), " argument must be set")
     return(FALSE)}
 
-  # -- init
-  rc <- FALSE
-
-  # -- file connector
+  # -- file
+  # only .csv is supported
   if("file" %in% names(args))
-    rc <- do.call(write_data, c(args, list(verbose = verbose)))
+    f <- "write_data"
 
-  # -- return
-  rc
+  # -- API
+  else if("api" %in% names(args))
+
+    # -- Supabase
+    if(args$api == "supabase"){
+
+      # -- upsert
+      if("data" %in% names(args))
+        f <- "supabase_upsert"
+
+      # -- delete
+      else if("values" %in% names(args))
+        f <- "supabase_delete"}
+
+  # -- call connector function & return
+  do.call(f, c(args, list(verbose = verbose)))
 
 }

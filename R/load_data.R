@@ -43,16 +43,17 @@ load_data <- function(..., verbose = FALSE, data.frame = FALSE, force_empty = FA
 
   # -- file
   if("file" %in% names(args))
-    x <- do.call(read_data, c(args, list(verbose = verbose)))
+    f <- "read_data"
 
   # -- API
-  else if("api" %in% names(args)){
+  else if("api" %in% names(args))
 
     # -- Supabase
     if(args$api == "supabase")
-      x <- do.call(supabase_select, c(args, list(verbose = verbose)))
+      f <- "supabase_select"
 
-    else x <- NULL}
+  # -- call connector function
+  x <- do.call(f, c(args, list(verbose = verbose)))
 
   # -- force empty
   # return NULL if x has no rows/observations
