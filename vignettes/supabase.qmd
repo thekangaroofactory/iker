@@ -1,0 +1,104 @@
+---
+title: "Supabase"
+format: html
+editor: visual
+---
+
+## Introduction
+
+The supabase connector allows to manage data stored into the *Supabase* PostgreSQL cloud.\
+The high-level functions are:
+
+- load_data()
+- save_data()
+
+The following parameters are **mandatory**:
+
+- **`api = "supabase"`** : to indicate which connector to use.
+- **`url`**: the project url provided by Supabase.\
+  Environment variable `"SUPABASE_API_URL"` can be used.
+- **`api_key`\***: the API key provided by Supabase.\
+  Environment variable `"SUPABASE_API_KEY"` should be used.
+- **`table`**: the name of the target table in the database.\
+  Environment variable `"SUPABASE_TABLE"` can be used.
+
+::: callout-important
+Environment variables are provided to pass the url, api_key and table values.\
+While url & table variables are considered as optional to have a single definition, api_key should always be passed through the environment variable so that it is not hard coded anywhere.
+:::
+
+## Select data
+
+Specific parameter dedicated to selecting (loading) data:
+
+- query: if not provided, all data in the target table will be loaded.
+
+``` r
+# set environment
+Sys.setenv("SUPABASE_API_URL" = "https://<project_ref>.supabase.co/rest/v1/")
+Sys.setenv("SUPABASE_API_KEY" = "<api_key>")
+
+# select all rows from table 'test'
+load_data(api = "supabase", table = "test")
+```
+
+See supabase_select() for more details.
+
+## Upsert data
+
+Specific parameter dedicated to creating / updating the data:
+
+- **data**: the data, as a data.frame object.\
+  Because upsert is implemented, the data.frame can mix new & updated rows in a single call.
+
+``` r
+# set environment
+Sys.setenv("SUPABASE_API_URL" = "https://<project_ref>.supabase.co/rest/v1/")
+Sys.setenv("SUPABASE_API_KEY" = "<api_key>")
+
+# insert rows (assuming the test table has id & comment attributes)
+save_data(api = "supabase", table = "test", data = data.frame(id = 2, comment = "test"))
+
+# update rows
+save_data(api = "supabase", table = "test", data = data.frame(id = 2, comment = "update"))
+
+# upsert rows
+save_data(api = "supabase", table = "test", data = data.frame(id = 2, comment = "update again"),
+                                            id = 3, comment = "new rows")
+```
+
+See supabase_upsert() for more details.
+
+## Delete data
+
+Specific parameters dedicated to deleting data:
+
+- key: the name of the primary key attribute, in case it is not "id".
+- **values**: the index value(s) to be deleted.
+
+``` r
+# set environment
+Sys.setenv("SUPABASE_API_URL" = "https://<project_ref>.supabase.co/rest/v1/")
+Sys.setenv("SUPABASE_API_KEY" = "<api_key>")
+
+# delete rows
+save_data(api = "supabase", table = "test", values = c(1, 2))
+```
+
+## List
+
+The high-level functions are smart enough to understand parameters passed as a list.
+
+For example:
+
+``` r
+load_data(api = "supabase", table = "test")
+```
+
+Is equivalent to:
+
+``` r
+save_data(connector = list(api = "supabase", table = "test"))
+```
+
+This is useful when several connectors may be used in the same app or when the connector values are stored as a list-like object (a YAML file for example).

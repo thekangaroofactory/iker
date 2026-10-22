@@ -1,0 +1,58 @@
+---
+title: "File"
+format: html
+editor: visual
+---
+
+## Introduction
+
+The file connector allows to manage data stored as **.csv** files.\
+The high-level functions are:
+
+- load_data()
+- save_data()
+
+The following parameters are **mandatory**:
+
+- **path**: either explicit value or through the `"DATA_HOME"` environment variable.
+- **file**: the file name (including .csv extension).
+
+Optional parameter:
+
+- resource: used as a sub-folder relative to `path`. This is useful when the environment variable is defined as a path to the application data, but each date types (i.e. each resource) is stored in a specific folder.
+- delim: to set a delimiter that is different from ",".
+
+## Read data
+
+Specific parameter dedicated to reading the data:
+
+- col_types
+
+See read_data() for more details.
+
+## Write data
+
+Specific parameter dedicated to writing the data:
+
+- **x**: the data itself, as a data.frame object.
+
+Because of the nature of the storage, the full dataset has to be passed.\
+See write_data() for more details.
+
+## List
+
+The high-level functions are smart enough to understand parameters passed as a list.
+
+For example:
+
+``` r
+load_data(path = getwd(), file = "test.csv")
+```
+
+Is equivalent to:
+
+``` r
+load_data(connector = list(path = getwd(), file = "test.csv"))
+```
+
+This is useful when several connectors may be used in the same app or when the connector values are stored as a list-like object (a YAML file for example).
