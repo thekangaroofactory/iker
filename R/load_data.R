@@ -36,14 +36,23 @@ load_data <- function(..., verbose = FALSE, data.frame = FALSE, force_empty = FA
     args <- append(args[-which(names(args) == "connector")], args$connector)
 
   # -- check allowed connectors
-  connectors <- c("file")
+  connectors <- c("file", "api")
   if(!any(connectors %in% names(args))){
     warning("[iker] one of the connector ", paste0("[", connectors, "]"), " argument must be set")
     return(NULL)}
 
-  # -- file connector
+  # -- file
   if("file" %in% names(args))
     x <- do.call(read_data, c(args, list(verbose = verbose)))
+
+  # -- API
+  else if("api" %in% names(args)){
+
+    # -- Supabase
+    if(args$api == "supabase")
+      x <- do.call(supabase_select, c(args, list(verbose = verbose)))
+
+    else x <- NULL}
 
   # -- force empty
   # return NULL if x has no rows/observations
