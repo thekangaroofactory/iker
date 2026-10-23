@@ -1,7 +1,7 @@
 Package: iker
 Title: Iker Is Your Data Scribe
 Description: Iker defines itself as a Scribe - a person who copies out documents. The package is meant to read / write data and provide various connectors.
-Version: 0.9.5
+Version: 0.9.6
 Authors@R: 
     person(given = "Philippe",
            family = "Peret",
