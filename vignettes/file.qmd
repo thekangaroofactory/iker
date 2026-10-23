@@ -2,6 +2,11 @@
 title: "File"
 format: html
 editor: visual
+
+vignette: >
+  %\VignetteIndexEntry{File}
+  %\VignetteEngine{quarto::html}
+  %\VignetteEncoding{UTF-8}
 ---
 
 ## Introduction

@@ -2,6 +2,11 @@
 title: "Supabase"
 format: html
 editor: visual
+
+vignette: >
+  %\VignetteIndexEntry{Supabase}
+  %\VignetteEngine{quarto::html}
+  %\VignetteEncoding{UTF-8}
 ---
 
 ## Introduction

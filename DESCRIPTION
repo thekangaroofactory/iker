@@ -11,14 +11,22 @@ Authors@R:
 License: GPL-3
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
+Depends:
+    R (>= 4.1.0)
 Imports:
     ktools,
     readr,
-    tibble
+    tibble,
+    curl,
+    jsonlite,
+    openssl
 Suggests: 
-    testthat (>= 3.0.0)
+    testthat (>= 3.0.0),
+    quarto
 Remotes: 
     thekangaroofactory/ktools
 Config/testthat/edition: 3
 Config/roxygen2/version: 8.1.0
+VignetteBuilder: 
+    quarto
 URL: https://thekangaroofactory.github.io/iker/
