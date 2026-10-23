@@ -1,0 +1,40 @@
+url: https://thekangaroofactory.github.io/iker/
+
+template:
+  bootstrap: 5
+  light-switch: true
+
+authors:
+  Philippe Peret:
+    href: https://www.linkedin.com/in/philippeperet/
+
+reference:
+- title: Generic connectors
+  contents:
+  - load_data
+  - save_data
+  - read_data
+  - write_data
+  - call_api
+
+- title: Specific connectors
+  contents:
+  - github
+  - supabase_select
+  - supabase_upsert
+  - supabase_delete
+
+- title: Helpers
+  contents:
+  - from_POSIXct
+  - to_POSIXct
+  - rstring
+  - with_cache
+
+articles:
+- title: Connectors
+  desc: Articles describing the connectors and their parameters.
+  navbar: ~
+  contents:
+  - file
+  - supabase

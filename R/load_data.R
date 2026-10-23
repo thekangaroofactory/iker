@@ -1,48 +1,59 @@
 
 
-#' Load Data From Various Connectors
+#' Load Data From Connector
 #'
-#' @param ... arguments to pass to connector (see details)
-#' @param verbose a logical (default = FALSE) to indicate if additional traces should be sent to the console
-#' @param data.frame a logical (default = FALSE) if a data.frame should be returned (instead of a tibble)
-#' @param force_empty a logical (default = FALSE) if NULL should be returned when data has no row
+#' @param ... arguments to pass to the connector function (see details).
+#' @param verbose a logical (default = FALSE) to indicate if additional traces should be sent to the console.
+#' @param data.frame a logical (default = FALSE) if a data.frame should be returned (instead of a tibble).
+#' @param force_empty a logical (default = FALSE) if NULL should be returned when data has no row.
 #'
 #' @details
-#' The load_data function is a wrapper around connector functions.
+#' The function is a wrapper around connector functions.
 #' It offers a single point of access to the package data persistence features.
 #'
-#' Arguments passed to ... depend on the desired connector:
-#' - file: \link[iker]{read_data}
+#' Arguments passed to `...` depend on the desired connector.
+#' Vignettes are available to describe the connectors.
 #'
-#' @returns the output of the connector function
+#' @seealso [read_data()][supabase_select()]
+#'
+#' @returns the output of the connector function.
 #' @export
 #'
 #' @examples
 #' \dontrun{
 #' # -- file connector
-#' load_data(file = "my_data.csv", path = getwd())
+#' load_data(path = getwd(), file = "my_data.csv")
 #' }
 
 
 load_data <- function(..., verbose = FALSE, data.frame = FALSE, force_empty = FALSE) {
 
-  # -- get ellipsis arguments
+  # -- get ellipsis
   args <- list(...)
 
-  # -- allowed connectors
-  connectors <- c("file")
+  # -- unwrap connector
+  if("connector" %in% names(args))
+    args <- append(args[-which(names(args) == "connector")], args$connector)
 
-  # -- check connector
+  # -- check allowed connectors
+  connectors <- c("file", "api")
   if(!any(connectors %in% names(args))){
     warning("[iker] one of the connector ", paste0("[", connectors, "]"), " argument must be set")
     return(NULL)}
 
-  # -- init
-  x <- NULL
-
-  # -- file connector
+  # -- file
   if("file" %in% names(args))
-    x <- read_data(..., verbose = verbose)
+    f <- "read_data"
+
+  # -- API
+  else if("api" %in% names(args))
+
+    # -- Supabase
+    if(args$api == "supabase")
+      f <- "supabase_select"
+
+  # -- call connector function
+  x <- do.call(f, c(args, list(verbose = verbose)))
 
   # -- force empty
   # return NULL if x has no rows/observations

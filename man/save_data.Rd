@@ -2,33 +2,35 @@
 % Please edit documentation in R/save_data.R
 \name{save_data}
 \alias{save_data}
-\title{Save Data To Various Connectors}
+\title{Save Data To Connector}
 \usage{
 save_data(..., verbose = FALSE)
 }
 \arguments{
-\item{...}{arguments to pass to connector (see details)}
+\item{...}{arguments to pass to the connector function (see details).}
 
-\item{verbose}{a logical (default = FALSE) to indicate if additional traces should be sent to the console}
+\item{verbose}{a logical (default = FALSE) to indicate if additional traces
+should be sent to the console.}
 }
 \value{
-the output of the connector function
+the output of the connector function.
 }
 \description{
-Save Data To Various Connectors
+Save Data To Connector
 }
 \details{
-The save_data function is a wrapper around connector functions.
+The function is a wrapper around connector functions.
 It offers a single point of access to the package data persistence features.
 
-Arguments passed to ... depend on the desired connector:
-\itemize{
-\item file: \link[iker]{write_data}
-}
+Arguments passed to \code{...} depend on the desired connector:
+Vignettes are available to describe the connectors.
 }
 \examples{
 \dontrun{
 # -- file connector
 save_data(file = "my_data.csv", path = getwd())
 }
+}
+\seealso{
+[write_data()][supabase_upsert()][supabase_delete()]
 }

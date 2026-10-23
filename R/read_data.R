@@ -10,7 +10,7 @@
 #' @param verbose A logical whether additional trace should be sent to the console.
 #'
 #' @details
-#' By default, path takes its value from the DATA_HOME environment variable.
+#' By default, path takes its value from the `R_IKER_PATH` environment variable.
 #' If it's not set in the environment and no value has been provided, function will be stopped (and return NULL).
 #' When NULL, it will be ignored (assuming file contains the full path to the file)
 #'
@@ -28,7 +28,7 @@
 #' }
 
 
-read_data <- function(path = Sys.getenv("DATA_HOME"), resource = NULL, file, delim = ",", col_types = NULL, verbose = FALSE){
+read_data <- function(path = Sys.getenv("R_IKER_PATH"), resource = NULL, file, delim = ",", col_types = NULL, verbose = FALSE){
 
   # ----------------------------------------------------------------------------
   # check parameters
@@ -37,7 +37,7 @@ read_data <- function(path = Sys.getenv("DATA_HOME"), resource = NULL, file, del
   # -- check path (skip if NULL)
   if(!is.null(path))
     if(path == ""){
-      warning("[Iker] Empty path, check DATA_HOME environment variable or provide a value for the argument")
+      warning("[Iker] Empty path, check R_IKER_PATH environment variable or provide a value for the argument")
       return(NULL)}
 
   # -- get extension
