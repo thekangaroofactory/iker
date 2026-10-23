@@ -19,7 +19,7 @@ The high-level functions are:
 
 The following parameters are **mandatory**:
 
-- **path**: either explicit value or through the `"DATA_HOME"` environment variable.
+- **path**: either explicit value or through the `"R_IKER_PATH"` environment variable.
 - **file**: the file name (including .csv extension).
 
 Optional parameter:

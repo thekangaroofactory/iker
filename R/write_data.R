@@ -10,7 +10,7 @@
 #' @param verbose If TRUE, additional messages will be sent to the console
 #'
 #' @details
-#' By default, path takes its value from the DATA_HOME environment variable.
+#' By default, path takes its value from the `R_IKER_PATH` environment variable.
 #' If it's not set in the environment and no value has been provided, function will be stopped (and return FALSE).
 #' If the corresponding path does not exist, it won't be created - to avoid creating data inside a container if the mount has not been done for example.
 #' When NULL, no check will be done.
@@ -31,7 +31,7 @@
 #' }
 
 
-write_data <- function(x, path = Sys.getenv("DATA_HOME"), resource = NULL, file, delim = ",", verbose = FALSE){
+write_data <- function(x, path = Sys.getenv("R_IKER_PATH"), resource = NULL, file, delim = ",", verbose = FALSE){
 
   # ----------------------------------------------------------------------------
   # check parameters
@@ -40,7 +40,7 @@ write_data <- function(x, path = Sys.getenv("DATA_HOME"), resource = NULL, file,
   # -- check path (skip if NULL)
   if(!is.null(path))
     if(path == ""){
-      warning("[Iker] Empty path, check DATA_HOME environment variable or provide a value for the argument")
+      warning("[Iker] Empty path, check R_IKER_PATH environment variable or provide a value for the argument")
       return(FALSE)}
 
   # -- get extension
