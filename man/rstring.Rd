@@ -20,6 +20,6 @@ The function produces character strings based on sampling
 alphanumerical characters.
 }
 \examples{
-random_string()
-random_string(n = 10)
+rstring()
+rstring(n = 10)
 }

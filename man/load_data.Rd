@@ -2,37 +2,38 @@
 % Please edit documentation in R/load_data.R
 \name{load_data}
 \alias{load_data}
-\title{Load Data From Various Connectors}
+\title{Load Data From Connector}
 \usage{
 load_data(..., verbose = FALSE, data.frame = FALSE, force_empty = FALSE)
 }
 \arguments{
-\item{...}{arguments to pass to connector (see details)}
+\item{...}{arguments to pass to the connector function (see details).}
 
-\item{verbose}{a logical (default = FALSE) to indicate if additional traces should be sent to the console}
+\item{verbose}{a logical (default = FALSE) to indicate if additional traces should be sent to the console.}
 
-\item{data.frame}{a logical (default = FALSE) if a data.frame should be returned (instead of a tibble)}
+\item{data.frame}{a logical (default = FALSE) if a data.frame should be returned (instead of a tibble).}
 
-\item{force_empty}{a logical (default = FALSE) if NULL should be returned when data has no row}
+\item{force_empty}{a logical (default = FALSE) if NULL should be returned when data has no row.}
 }
 \value{
-the output of the connector function
+the output of the connector function.
 }
 \description{
-Load Data From Various Connectors
+Load Data From Connector
 }
 \details{
-The load_data function is a wrapper around connector functions.
+The function is a wrapper around connector functions.
 It offers a single point of access to the package data persistence features.
 
-Arguments passed to ... depend on the desired connector:
-\itemize{
-\item file: \link[iker]{read_data}
-}
+Arguments passed to \code{...} depend on the desired connector.
+Vignettes are available to describe the connectors.
 }
 \examples{
 \dontrun{
 # -- file connector
-load_data(file = "my_data.csv", path = getwd())
+load_data(path = getwd(), file = "my_data.csv")
 }
+}
+\seealso{
+\link[=supabase_select]{read_data()}
 }

@@ -1,8 +1,10 @@
 # iker
 
-Iker is a data scribe. In ancient civilizations (such as Egypt), a scribe used to be a professional copyist who hand-wrote manuscripts and official documents.
+Iker is a data scribe.\
+In ancient civilizations (such as Egypt), a scribe used to be a professional copyist who hand-wrote manuscripts and official documents.
 
-The purpose of the package is to externalize data reading and writing so that applications do not have to manage the I/O layer.\
+The purpose of the package is to externalize data reading and writing so that applications do not have to manage the I/O layer.
+
 It offers general connectors (file, API) as well as specific implementations (Supabase, GitHub).
 
 <!-- badges: start -->

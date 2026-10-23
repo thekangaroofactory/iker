@@ -30,3 +30,11 @@ reference:
   - to_POSIXct
   - rstring
   - with_cache
+
+articles:
+- title: Connectors
+  desc: Articles describing the connectors and their parameters.
+  navbar: ~
+  contents:
+  - file
+  - supabase
