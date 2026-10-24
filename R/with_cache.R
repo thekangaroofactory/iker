@@ -126,7 +126,10 @@ with_cache <- function(expr, path = Sys.getenv("R_IKER_CACHE_PATH"),
           cat("Returning response from cache \n")
 
         return(
-          unserialize(if(encrypt) openssl::aes_cbc_decrypt(readRDS(file.path(path, hash)), key = key) else readRDS(file.path(path, hash))))
+          if(encrypt)
+            unserialize(openssl::aes_cbc_decrypt(readRDS(file.path(path, hash)), key = key))
+          else
+            readRDS(file.path(path, hash)))
 
       } else if(verbose)
         cat("Cache content expired \n")}
