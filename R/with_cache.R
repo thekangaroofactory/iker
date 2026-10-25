@@ -85,6 +85,8 @@ with_cache <- function(expr, path = Sys.getenv("R_IKER_CACHE_PATH"),
 
   # ////////////////////////////////////////////////////////////////////////////
   # cache content & cleanup
+
+  # get content
   files <- list.files(path, full.names = TRUE)
   cache_files <- data.frame(file = files,
                             date = file.mtime(files),
@@ -109,14 +111,43 @@ with_cache <- function(expr, path = Sys.getenv("R_IKER_CACHE_PATH"),
 
 
   # ////////////////////////////////////////////////////////////////////////////
+  # Compute hash
+  # ! expr needs its arguments to be evaluated first #46
+
+  if(verbose)
+    cat("Computing cache label: \n")
+
+  # 1. Capture the expression as a raw defused expression
+  d_expr <- rlang::enquo(expr)
+
+  # 2. Get the raw arguments from the defused expression
+  u_args <- rlang::call_args(d_expr)
+
+  # 2. Evaluate the arguments in the caller's environment
+  e_args <- lapply(u_args, rlang::eval_tidy, env = rlang::quo_get_env(d_expr))
+
+  # 3. Rebuild the call with the evaluated arguments
+  n_expr <- rlang::call2(rlang::call_name(d_expr), !!!e_args)
+
+  # 4. Convert to string
+  # ! keep it as is (as_label would return ... when too long)
+  s_expr <- deparse1(n_expr)
+  if(verbose)
+    cat("Cache label =", s_expr, "\n")
+
+  # 5. compute hash on expression with evaluated arguments
+  hash <- openssl::sha256(s_expr)
+
+
+  # ////////////////////////////////////////////////////////////////////////////
   # check cache status
 
-  hash <- openssl::sha256(deparse(substitute(expr)))
+  # check content
   if(!force)
     if(file.path(path, hash) %in% cache_files$file){
 
       if(verbose)
-        cat("Found in cache, checking status \n")
+        cat("Found in cache, file =", file.path(path, hash), "\n")
 
       ts <- cache_files[cache_files$file == file.path(path, hash), ]$date
 
@@ -134,16 +165,21 @@ with_cache <- function(expr, path = Sys.getenv("R_IKER_CACHE_PATH"),
       } else if(verbose)
         cat("Cache content expired \n")}
 
-  # (otherwise) run expr
+  # (otherwise) eval expression
   if(verbose)
     cat("Evaluating expr \n")
-  x <- eval(expr)
+  #x <- eval(expr)
+  x <- rlang::eval_tidy(d_expr)
 
   # update cache
   if(verbose)
     cat("Update cache content \n")
-  saveRDS(if(encrypt) openssl::aes_cbc_encrypt(serialize(x, NULL), key = key) else x,
-          file.path(path, hash))
+  saveRDS(
+    if(encrypt)
+      openssl::aes_cbc_encrypt(serialize(x, NULL), key = key)
+    else x,
+    file.path(path, hash))
+
 
   # ////////////////////////////////////////////////////////////////////////////
   # size limit
