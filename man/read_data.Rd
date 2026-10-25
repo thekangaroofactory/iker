@@ -33,7 +33,7 @@ A tibble, output value of the read_delim() call or NULL if data can't be read.
 Read Data
 }
 \details{
-By default, path takes its value from the R_IKER_PATH environment variable.
+By default, path takes its value from the \code{R_IKER_PATH} environment variable.
 If it's not set in the environment and no value has been provided, function will be stopped (and return NULL).
 When NULL, it will be ignored (assuming file contains the full path to the file)
 
