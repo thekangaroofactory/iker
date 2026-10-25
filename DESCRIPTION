@@ -19,7 +19,8 @@ Imports:
     tibble,
     curl,
     jsonlite,
-    openssl
+    openssl,
+    rlang
 Suggests: 
     testthat (>= 3.0.0),
     quarto
