@@ -130,7 +130,8 @@ with_cache <- function(expr, path = Sys.getenv("R_IKER_CACHE_PATH"),
   n_expr <- rlang::call2(rlang::call_name(d_expr), !!!e_args)
 
   # 4. Convert to string
-  s_expr <- rlang::as_label(n_expr)
+  # ! keep it as is (as_label would return ... when too long)
+  s_expr <- deparse1(n_expr)
   if(verbose)
     cat("Cache label =", s_expr, "\n")
 
