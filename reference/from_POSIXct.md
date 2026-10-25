@@ -24,5 +24,5 @@ character columns
 ``` r
 from_POSIXct(data.frame(a = Sys.time()))
 #>                          a
-#> 1 2026-10-24T16:08:08+0000
+#> 1 2026-10-25T13:31:41+0000
 ```

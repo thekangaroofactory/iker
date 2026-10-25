@@ -47,7 +47,7 @@ returns the input x invisibly, or FALSE when it fails
 
 ## Details
 
-By default, path takes its value from the R_IKER_PATH environment
+By default, path takes its value from the `R_IKER_PATH` environment
 variable. If it's not set in the environment and no value has been
 provided, function will be stopped (and return FALSE). If the
 corresponding path does not exist, it won't be created - to avoid
