@@ -30,6 +30,7 @@ reference:
   - to_POSIXct
   - rstring
   - with_cache
+  - reset_cache
 
 articles:
 - title: Connectors
