@@ -32,3 +32,5 @@
   : Random String
 - [`with_cache()`](https://thekangaroofactory.github.io/iker/reference/with_cache.md)
   : With Cache
+- [`reset_cache()`](https://thekangaroofactory.github.io/iker/reference/reset_cache.md)
+  : Reset Cache
