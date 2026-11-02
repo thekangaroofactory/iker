@@ -5,7 +5,7 @@
 #' High level implementation of 'curl' fetch to memory.
 #'
 #' @param url character, the API url.
-#' @param header a list of character headers.
+#' @param header an optional list of character headers.
 #' @param options optional list (see details).
 #' @param raw a logical (default FALSE) if the raw content should be returned.
 #' @param verbose a logical (default FALSE) if logs should be printed to the console.
@@ -28,7 +28,7 @@
 #' call_api(url = "https://some/url", header = list(Accept = "application/json"))
 #' }
 
-call_api <- function(url, header, options = NULL, raw = FALSE, verbose = FALSE){
+call_api <- function(url, header = list(), options = NULL, raw = FALSE, verbose = FALSE){
 
   # -- check params
   stopifnot("url must be a character string" = is.character(url))

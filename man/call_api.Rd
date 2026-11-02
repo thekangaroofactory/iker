@@ -4,12 +4,12 @@
 \alias{call_api}
 \title{Call API}
 \usage{
-call_api(url, header, options = NULL, raw = FALSE, verbose = FALSE)
+call_api(url, header = list(), options = NULL, raw = FALSE, verbose = FALSE)
 }
 \arguments{
 \item{url}{character, the API url.}
 
-\item{header}{a list of character headers.}
+\item{header}{an optional list of character headers.}
 
 \item{options}{optional list (see details).}
 
