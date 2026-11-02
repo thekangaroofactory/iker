@@ -11,6 +11,12 @@ test_that("reset_cache works", {
   expect_message(reset_cache(force = T))
   expect_length(list.files(cache_dir), 0L)
 
+  # basic call
+  expect_no_condition(reset_cache())
+
+  # path does not exist
+  expect_warning(reset_cache(path = "dummy/path"))
+
 })
 
 
