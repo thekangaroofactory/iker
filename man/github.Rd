@@ -36,7 +36,7 @@ github(
 \item{verbose}{optional, if logs should be printed.}
 }
 \value{
-a data.frame.
+a data.frame or NULL.
 }
 \description{
 Helper to get resources from GitHub API.

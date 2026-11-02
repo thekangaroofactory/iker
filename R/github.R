@@ -26,7 +26,7 @@
 #'
 #' `param` is used to pass query parameters to the API (see example).
 #'
-#' @returns a data.frame.
+#' @returns a data.frame or NULL.
 #' @export
 #'
 #' @examples

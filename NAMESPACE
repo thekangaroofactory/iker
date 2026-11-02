@@ -2,6 +2,7 @@
 
 export(call_api)
 export(from_POSIXct)
+export(gh_changelog)
 export(github)
 export(load_data)
 export(read_data)
