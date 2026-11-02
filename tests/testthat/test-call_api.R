@@ -3,7 +3,7 @@ test_that("call_api works", {
 
   # baseline
   res <- call_api(url = "https://postman-echo.com/get?foo1=bar1&foo2=bar2",
-                  header = list())
+                  verbose = TRUE)
 
   expect_equal(res$status_code, 200)
 
@@ -20,10 +20,9 @@ test_that("call_api works", {
 
   expect_equal(res$status_code, 200)
 
-  # error (+ verbose)
+  # error
   expect_warning(res <- call_api(url = "https://postman-echo.com/dummy",
-                                 header = list(),
-                                 verbose = TRUE))
+                                 header = list()))
 
   expect_equal(res$status_code, 404)
 
