@@ -58,6 +58,9 @@ github <- function(resource = c("repos", "milestones", "issues"), repo = NULL, p
   api_version <- match.arg(api_version)
   resource <-  match.arg(resource)
 
+  # secure against url ending by /
+  url <- sub("/$", "", url)
+
 
   # ////////////////////////////////////////////////////////////////////////////
   # URL

@@ -10,6 +10,7 @@ test_that("multiplication works", {
                   owner = "thekangaroofactory",
                   user_agent = "dummy",
                   token = "dummy",
+                  param = list(state = "open"),
                   verbose = TRUE)))
 
   expect_null(x)
